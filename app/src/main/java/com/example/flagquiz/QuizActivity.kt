@@ -10,7 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 class QuizActivity : AppCompatActivity() {
     private lateinit var imgFlag: ImageView
     private val flags = listOf(
-        R.drawable.flag_australia,
+        R.drawable.flag_argentina,
         R.drawable.flag_brasil
     )
 
@@ -23,7 +23,7 @@ class QuizActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        imgFlag = findViewById(R.id.imageView)
+        imgFlag = findViewById(R.id.imageView2)
         displayRandomFlag()
     }
 
