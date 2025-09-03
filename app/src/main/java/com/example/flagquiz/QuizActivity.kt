@@ -47,7 +47,6 @@ class QuizActivity : AppCompatActivity() {
 
         submitButton.setOnClickListener {
             checkAnswer()
-            displayRandomFlag()
         }
     }
 
@@ -76,8 +75,12 @@ class QuizActivity : AppCompatActivity() {
         if (userAnswer.equals(currentFlagName, ignoreCase = true)) {
             score += 20
             Toast.makeText(this, "Resposta Correta! Pontuação: $score", Toast.LENGTH_SHORT).show()
-        } else {
+            displayRandomFlag()
+        } else if (userAnswer.isNotEmpty()){
             Toast.makeText(this, "Resposta Errada! Pontuação: $score", Toast.LENGTH_SHORT).show()
+            displayRandomFlag()
+        } else{
+            Toast.makeText(this, "Resposta não preenchida", Toast.LENGTH_LONG).show()
         }
         answerTry.text.clear()
         questionNumber++
