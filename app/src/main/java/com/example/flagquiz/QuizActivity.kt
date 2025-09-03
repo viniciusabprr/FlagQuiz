@@ -52,6 +52,7 @@ class QuizActivity : AppCompatActivity() {
         submitButton.setOnClickListener {
             checkAnswer()
             displayRandomFlag()
+            answerTry.text.clear()
         }
     }
     private fun displayRandomFlag() {
@@ -78,9 +79,9 @@ class QuizActivity : AppCompatActivity() {
     fun checkAnswer (){
         val userAnswer = answerTry.text.toString().trim()
         if (userAnswer.equals(currentFlagName, ignoreCase = true)){
-            Toast.makeText(this, "Correto", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Resposta Correta", Toast.LENGTH_LONG).show()
         } else{
-            Toast.makeText(this, "Errado", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Resposta Errada", Toast.LENGTH_LONG).show()
         }
     }
 }
