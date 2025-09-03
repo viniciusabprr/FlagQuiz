@@ -15,10 +15,9 @@
         android:layout_marginStart="101dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="101dp"
-        android:layout_marginBottom="340dp"
+        android:layout_marginBottom="196dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Nome do País"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -33,13 +32,14 @@
         android:layout_marginTop="28dp"
         android:layout_marginEnd="141dp"
         android:layout_marginBottom="93dp"
+        android:onClick="checkAnswer"
         android:text="Submeter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextText2"
-        app:layout_constraintVertical_bias="0.005" />
+        app:layout_constraintVertical_bias="0.666" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -49,21 +49,23 @@
         android:layout_marginBottom="71dp"
         app:layout_constraintBottom_toTopOf="@+id/editTextText2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.421"
+        app:layout_constraintVertical_bias="0.0"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/buttonTest"
+    <TextView
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="177dp"
+        android:layout_marginBottom="28dp"
+        android:text="Nome do País"
+        app:layout_constraintBottom_toTopOf="@+id/editTextText2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 </androidx.constraintlayout.widget.ConstraintLayout>
