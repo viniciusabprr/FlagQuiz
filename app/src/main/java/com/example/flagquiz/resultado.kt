@@ -18,25 +18,21 @@ class resultado : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
-
-
         }
 
         val resultname = findViewById<TextView>(R.id.Resultname)
         val namereceived = intent.getStringExtra("PLAYER_NAME")
+        resultname.text = namereceived
 
-         resultname.text = namereceived
-
-
+        val resultScore = findViewById<TextView>(R.id.score)
+        val scoreReceived = intent.getIntExtra("EXTRA_SCORE", 0)
+        resultScore.text = "Pontuação: $scoreReceived"
 
         val buttonrRestart = findViewById<Button>(R.id.buttonRestart)
-
         buttonrRestart.setOnClickListener {
-            val intent = Intent(this,MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-
             finish()
         }
     }
-
 }

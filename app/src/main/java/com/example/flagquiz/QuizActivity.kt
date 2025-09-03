@@ -15,6 +15,7 @@ class QuizActivity : AppCompatActivity() {
     private lateinit var imgFlag: ImageView
     private lateinit var submitButton: Button
     private lateinit var answerTry: EditText
+    private lateinit var playerName: String
     private var score = 0
 
     private val flags = listOf(
@@ -38,20 +39,22 @@ class QuizActivity : AppCompatActivity() {
             insets
         }
 
+        playerName = intent.getStringExtra("PLAYER_NAME") ?: ""
+
         imgFlag = findViewById(R.id.imageView2)
         submitButton = findViewById(R.id.button2)
         answerTry = findViewById(R.id.editTextText2)
 
         FLAGS_IN_GAME = flags.shuffled().take(5)
-        displayRandomFlag()
+        displayNextFlag()
 
         submitButton.setOnClickListener {
             checkAnswer()
-            displayRandomFlag()
+            displayNextFlag()
         }
     }
 
-    private fun displayRandomFlag() {
+    private fun displayNextFlag() {
         if (questionNumber < FLAGS_IN_GAME.size) {
             val currentFlagId = FLAGS_IN_GAME[questionNumber]
             imgFlag.setImageResource(currentFlagId)
@@ -66,6 +69,7 @@ class QuizActivity : AppCompatActivity() {
         } else {
             val intent = Intent(this, resultado::class.java)
             intent.putExtra("EXTRA_SCORE", score)
+            intent.putExtra("PLAYER_NAME", playerName)
             startActivity(intent)
             finish()
         }
@@ -75,9 +79,9 @@ class QuizActivity : AppCompatActivity() {
         val userAnswer = answerTry.text.toString().trim()
         if (userAnswer.equals(currentFlagName, ignoreCase = true)) {
             score += 20
-            Toast.makeText(this, "Resposta Correta! Pontuação: $score", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Correto! Pontuação: $score", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "Resposta Errada! Pontuação: $score", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Errado", Toast.LENGTH_SHORT).show()
         }
         answerTry.text.clear()
         questionNumber++
