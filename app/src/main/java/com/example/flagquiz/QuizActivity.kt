@@ -79,9 +79,9 @@ class QuizActivity : AppCompatActivity() {
         val userAnswer = answerTry.text.toString().trim()
         if (userAnswer.equals(currentFlagName, ignoreCase = true)) {
             score += 20
-            Toast.makeText(this, "Correto! Pontuação: $score", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Resposta Correta! Pontuação: $score", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "Errado", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Resposta Errada: Pontuação: $score", Toast.LENGTH_SHORT).show()
         }
         answerTry.text.clear()
         questionNumber++
