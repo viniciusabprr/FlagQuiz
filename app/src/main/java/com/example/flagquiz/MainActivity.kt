@@ -30,7 +30,9 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Por favor, insira seu nome!", Toast.LENGTH_SHORT).show()
             } else {
                 val intent = Intent(this, QuizActivity::class.java)
+
                 intent.putExtra("PLAYER_NAME", playerName)
+
                 startActivity(intent)
             }
         }

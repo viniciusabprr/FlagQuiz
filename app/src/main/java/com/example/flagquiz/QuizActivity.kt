@@ -10,6 +10,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import java.io.Serializable
+
+// Classe de dados para armazenar o resultado de cada pergunta
+data class QuestionResult(
+    val flagName: String,
+    val isCorrect: Boolean
+) : Serializable
 
 class QuizActivity : AppCompatActivity() {
     private lateinit var imgFlag: ImageView
@@ -28,6 +35,7 @@ class QuizActivity : AppCompatActivity() {
     private var currentFlagName: String = ""
     private lateinit var FLAGS_IN_GAME: List<Int>
     private var questionNumber = 0
+    private val quizResults = ArrayList<QuestionResult>() // Lista para armazenar os resultados
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,9 +75,11 @@ class QuizActivity : AppCompatActivity() {
                 ""
             }
         } else {
+            // Fim do jogo, navega para a tela de resultados
             val intent = Intent(this, resultado::class.java)
             intent.putExtra("EXTRA_SCORE", score)
             intent.putExtra("PLAYER_NAME", playerName)
+            intent.putExtra("QUIZ_RESULTS", quizResults) // Passa a lista de resultados
             startActivity(intent)
             finish()
         }
@@ -77,13 +87,25 @@ class QuizActivity : AppCompatActivity() {
 
     fun checkAnswer() {
         val userAnswer = answerTry.text.toString().trim()
-        if (userAnswer.equals(currentFlagName, ignoreCase = true)) {
+        val isCorrect = userAnswer.equals(currentFlagName, ignoreCase = true)
+
+        // Adiciona o resultado à lista
+        quizResults.add(QuestionResult(currentFlagName, isCorrect))
+
+        if (isCorrect) {
             score += 20
             Toast.makeText(this, "Resposta Correta! Pontuação: $score", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, "Resposta Errada: Pontuação: $score", Toast.LENGTH_SHORT).show()
+        } else if (userAnswer.isNotEmpty()){
+            Toast.makeText(this, "Resposta Errada! Pontuação: $score", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Resposta não preenchida", Toast.LENGTH_LONG).show()
+            return // Retorna para não avançar de pergunta se a resposta estiver vazia
         }
+
         answerTry.text.clear()
         questionNumber++
+        displayNextFlag()
     }
 }
