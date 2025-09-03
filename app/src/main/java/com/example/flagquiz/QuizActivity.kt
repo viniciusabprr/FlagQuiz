@@ -1,40 +1,33 @@
 package com.example.flagquiz
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class QuizActivity : AppCompatActivity() {
     private lateinit var imgFlag: ImageView
     private lateinit var submitButton: Button
-
+    private lateinit var answerTry: EditText
     private var score = 0
+
     private val flags = listOf(
-        R.drawable.flag_argentina,
-        R.drawable.flag_brasil,
-        R.drawable.flag_venezuela,
-        R.drawable.flag_sudao,
-        R.drawable.flag_israel,
-        R.drawable.flag_espanha,
-        R.drawable.flag_estadosunidos,
-        R.drawable.flag_estonia,
-        R.drawable.flag_russia,
+        R.drawable.flag_argentina, R.drawable.flag_brasil, R.drawable.flag_venezuela,
+        R.drawable.flag_sudao, R.drawable.flag_israel, R.drawable.flag_espanha,
+        R.drawable.flag_estadosunidos, R.drawable.flag_estonia, R.drawable.flag_russia,
         R.drawable.flag_uruguai
     )
-    private lateinit var answerTry: EditText
-    private var currentFlagName: String = ""
 
-    private val displayedFlagNames = mutableListOf<String>()
+    private var currentFlagName: String = ""
     private lateinit var FLAGS_IN_GAME: List<Int>
     private var questionNumber = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -44,9 +37,10 @@ class QuizActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         imgFlag = findViewById(R.id.imageView2)
         submitButton = findViewById(R.id.button2)
-        answerTry = findViewById<EditText>(R.id.editTextText2)
+        answerTry = findViewById(R.id.editTextText2)
 
         FLAGS_IN_GAME = flags.shuffled().take(5)
         displayRandomFlag()
@@ -56,34 +50,36 @@ class QuizActivity : AppCompatActivity() {
             displayRandomFlag()
         }
     }
+
     private fun displayRandomFlag() {
-        if(questionNumber < FLAGS_IN_GAME.size){
+        if (questionNumber < FLAGS_IN_GAME.size) {
             val currentFlagId = FLAGS_IN_GAME[questionNumber]
-            imgFlag.setImageResource(FLAGS_IN_GAME[questionNumber])
-            questionNumber++
+            imgFlag.setImageResource(currentFlagId)
 
             val resourceName = resources.getResourceEntryName(currentFlagId)
-            try {
+            currentFlagName = try {
                 val parts = resourceName.split("_")
-                if (parts.size > 1){
-                    currentFlagName = parts.drop(1).joinToString("_")
-                    displayedFlagNames.add(currentFlagName)
-                } else {
-                    currentFlagName = resourceName
-                    displayedFlagNames.add(currentFlagName)
-                }
-            } catch (e: Exception){
-                currentFlagName = ""
+                if (parts.size > 1) parts.drop(1).joinToString("_") else resourceName
+            } catch (e: Exception) {
+                ""
             }
+        } else {
+            val intent = Intent(this, resultado::class.java)
+            intent.putExtra("EXTRA_SCORE", score)
+            startActivity(intent)
+            finish()
         }
     }
-    fun checkAnswer (){
+
+    fun checkAnswer() {
         val userAnswer = answerTry.text.toString().trim()
-        if (userAnswer.equals(currentFlagName, ignoreCase = true)){
-            Toast.makeText(this, "Correto", Toast.LENGTH_LONG).show()
-            score += 0
-        } else{
-            Toast.makeText(this, "Errado", Toast.LENGTH_LONG).show()
+        if (userAnswer.equals(currentFlagName, ignoreCase = true)) {
+            score += 20
+            Toast.makeText(this, "Resposta Correta! Pontuação: $score", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Resposta Errada! Pontuação: $score", Toast.LENGTH_SHORT).show()
         }
+        answerTry.text.clear()
+        questionNumber++
     }
 }
