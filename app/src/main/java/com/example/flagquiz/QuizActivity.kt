@@ -22,6 +22,7 @@ class QuizActivity : AppCompatActivity() {
     private lateinit var imgFlag: ImageView
     private lateinit var submitButton: Button
     private lateinit var answerTry: EditText
+    private lateinit var playerName: String
     private var score = 0
 
     private val flags = listOf(
@@ -46,6 +47,8 @@ class QuizActivity : AppCompatActivity() {
             insets
         }
 
+        playerName = intent.getStringExtra("PLAYER_NAME") ?: ""
+
         imgFlag = findViewById(R.id.imageView2)
         submitButton = findViewById(R.id.button2)
         answerTry = findViewById(R.id.editTextText2)
@@ -55,6 +58,7 @@ class QuizActivity : AppCompatActivity() {
 
         submitButton.setOnClickListener {
             checkAnswer()
+            displayNextFlag()
         }
     }
 
@@ -74,6 +78,7 @@ class QuizActivity : AppCompatActivity() {
             // Fim do jogo, navega para a tela de resultados
             val intent = Intent(this, resultado::class.java)
             intent.putExtra("EXTRA_SCORE", score)
+            intent.putExtra("PLAYER_NAME", playerName)
             intent.putExtra("QUIZ_RESULTS", quizResults) // Passa a lista de resultados
             startActivity(intent)
             finish()
@@ -90,6 +95,8 @@ class QuizActivity : AppCompatActivity() {
         if (isCorrect) {
             score += 20
             Toast.makeText(this, "Resposta Correta! Pontuação: $score", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Resposta Errada: Pontuação: $score", Toast.LENGTH_SHORT).show()
         } else if (userAnswer.isNotEmpty()){
             Toast.makeText(this, "Resposta Errada! Pontuação: $score", Toast.LENGTH_SHORT).show()
         } else {

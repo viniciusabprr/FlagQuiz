@@ -22,6 +22,16 @@ class resultado : AppCompatActivity() {
             insets
         }
 
+        val resultname = findViewById<TextView>(R.id.Resultname)
+        val namereceived = intent.getStringExtra("PLAYER_NAME")
+        resultname.text = namereceived
+
+        val resultScore = findViewById<TextView>(R.id.score)
+        val scoreReceived = intent.getIntExtra("EXTRA_SCORE", 0)
+        resultScore.text = "Pontuação: $scoreReceived"
+
+        val buttonrRestart = findViewById<Button>(R.id.buttonRestart)
+        buttonrRestart.setOnClickListener {
         // Recupera os dados do Intent
         val playerName = intent.getStringExtra("PLAYER_NAME")
         val finalScore = intent.getIntExtra("EXTRA_SCORE", 0)
