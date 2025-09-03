@@ -1,5 +1,6 @@
 package com.example.flagquiz
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
@@ -9,6 +10,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class QuizActivity : AppCompatActivity() {
+
+    private var nomeParaEnviar: String? = null
     private lateinit var imgFlag: ImageView
     private lateinit var submitButton: Button
     private val flags = listOf(
@@ -26,6 +29,7 @@ class QuizActivity : AppCompatActivity() {
 
     private lateinit var FLAGS_IN_GAME: List<Int>
     private var questionNumber = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -44,7 +48,24 @@ class QuizActivity : AppCompatActivity() {
         submitButton.setOnClickListener {
             displayRandomFlag()
         }
+
+        val  name = intent.getStringExtra("PLAYER_NAME")
+
+
+
+
+
+        val testeButton = findViewById<Button>(R.id.buttonTest)
+
+        testeButton.setOnClickListener{
+            val intent = Intent(this, resultado::class.java)
+            intent.putExtra("PLAYER_NAME", name)
+            startActivity(intent)
+
+        }
+
     }
+
 
     private fun displayRandomFlag() {
         if(questionNumber < FLAGS_IN_GAME.size){
